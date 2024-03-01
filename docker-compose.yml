@@ -2,7 +2,7 @@ version: '3'
 
 services:
   frontend:
-    build: ./frontend
+    image: jumpdaddy/budget-book-frontend:main
     volumes:
       - ./frontend/nginx.conf:/etc/nginx/nginx.conf
     ports:
@@ -11,7 +11,7 @@ services:
       - backend
 
   backend:
-    build: ./backend
+    image: jumpdaddy/budget-book-backend:main
     env_file: .env
     ports:
       - "3000:3000"
