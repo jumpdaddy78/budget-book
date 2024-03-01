@@ -1,4 +1,4 @@
-name: Budget-Book buid Pipe
+name: Budget-Book build Pipe Backend
 on:
   push:
     tags:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs: 
-  Build-and-Push-Budget-book-frontend-to-docker-hub:
+  Build-and-Push-Budget-book-backend-to-docker-hub:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -22,7 +22,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            jumpdaddy/budget-book-frontend
+            jumpdaddy/budget-book-backend
 
       - name: Login to Docker-hub
         uses: docker/login-action@v3
@@ -32,7 +32,7 @@ jobs:
       - name: build and push
         uses: docker/build-push-action@v5
         with: 
-          context: ./frontend
+          context: ./backend
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
