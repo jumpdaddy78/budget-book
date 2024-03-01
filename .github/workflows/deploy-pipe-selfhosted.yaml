@@ -26,5 +26,6 @@ jobs:
       - name: copy .env
         run: aws s3 cp s3://jumpbucket-dev-1612/secrets/.env .
       - name: login dockerhub
-        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+        run: sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
         
+ 
