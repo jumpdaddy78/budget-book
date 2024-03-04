@@ -19,14 +19,15 @@ jobs:
       - name: go to project root and get certs from s3
         run: cd ~/actions-runner/_work/budget-book/budget-book
       - name: copy certs
-        run: aws s3 cp s3://jumpbucket-dev-1612/secrets/cert.pem proxy/cert
-      - name: copy key
+        run: aws s3 cp s3://jumpbucket-dev-1612/secrets/fullchain.pem proxy/cert/cert.pem
+      - name: copy key 
         run: aws s3 cp s3://jumpbucket-dev-1612/secrets/privkey.pem proxy/cert
-      - name: copy .env
-        run: aws s3 cp s3://jumpbucket-dev-1612/secrets/.env .
-      - name: login dockerhub
-        run: sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: start docker-compose
-        run: sudo docker-compose up --build
+      # - name: copy .env
+      #   run: aws s3 cp s3://jumpbucket-dev-1612/secrets/.env .
+      # - name: login dockerhub
+      #   run: sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: export variables and secrets
+        run: export GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} && export GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} && export REDIRECT_HOST=${{ vars.REDIRECT_HOST }} && export CALLBACK_URL=${{ vars.CALLBACK_URL }} && export DB_HOST=${{ vars.DB_HOST }} && export DB_USER=${{ vars.DB_USER }} && export DB_PASSWORD=${{ vars.DB_PASSWORD}} && export DB_PORT=${{ vars.DB_PORT}} && export DB_NAME=${{ vars.DB_NAME }}
+
         
  
