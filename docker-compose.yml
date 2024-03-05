@@ -1,7 +1,7 @@
 version: '3'
 
 volumes:
-  - db-data
+  db-data:
 
 services:
   frontend:
@@ -52,7 +52,7 @@ services:
       - 443:443
     volumes:
       - ./proxy/nginx.conf:/etc/nginx/nginx.conf
-      # - ./proxy/cert:/etc/nginx/certs
+      - ./proxy/cert:/etc/nginx/certs
     depends_on:
       - frontend
 
