@@ -28,7 +28,6 @@ jobs:
       #   run: sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
       - name: export variables and secrets
         run: export GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} && export GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} && export REDIRECT_HOST=${{ vars.REDIRECT_HOST }} && export CALLBACK_URL=${{ vars.CALLBACK_URL }} && export DB_HOST=${{ vars.DB_HOST }} && export DB_USER=${{ vars.DB_USER }} && export DB_PASSWORD=${{ vars.DB_PASSWORD}} && export DB_PORT=${{ vars.DB_PORT}} && export DB_NAME=${{ vars.DB_NAME }}
-      - name: export with sudo
-        run: sudo !!
+
         
  
