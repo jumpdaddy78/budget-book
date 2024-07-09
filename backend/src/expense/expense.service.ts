@@ -2,24 +2,40 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Expense } from '../entity/expense.entity';
-import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
-export class PaymentService {
+export class ExpenseService {
   constructor(
     @InjectRepository(Expense) private expenseRepository: Repository<Expense>,
-    private jwtService: JwtService,
-  ) {}
+  ) { }
 
-  async findAll(req: any): Promise<Expense[]> {
+  async findAll(
+    req: any,
+    page: number = 1,
+    limit: number = 10,
+  ): Promise<{ expense: Expense[]; totalItems: number }> {
     const customerid = req.customer.sub;
-
     try {
-      const payments = await this.expenseRepository.find({
+      const [expense, totalItems] = await this.expenseRepository.findAndCount({
+        where: { customerid: customerid },
+        take: limit,
+        skip: (page - 1) * limit,
+      });
+
+      return { expense, totalItems };
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async findAllElements(req: any): Promise<Expense[]> {
+    const customerid = req.customer.sub;
+    try {
+      const expenses: Expense[] = await this.expenseRepository.find({
         where: { customerid: customerid },
       });
-      console.log(payments);
-      return payments;
+      return expenses;
     } catch (error) {
       console.error(error);
       throw error;
